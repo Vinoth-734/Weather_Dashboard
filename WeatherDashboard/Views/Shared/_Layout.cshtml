@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - WeatherDashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="topbar">
+        <h2>Weather Dashboard</h2>
+        <button id="themeToggle">Toggle Dark/Light</button>
+    </div>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <script>
+        // Theme toggle
+        const btn = document.getElementById('themeToggle');
+        function applyTheme(t) {
+            document.documentElement.setAttribute('data-theme', t);
+            localStorage.setItem('theme', t);
+        }
+        const saved = localStorage.getItem('theme') || 'light';
+        applyTheme(saved);
+        btn.addEventListener('click', () => {
+            const cur = document.documentElement.getAttribute('data-theme') || 'light';
+            applyTheme(cur === 'light' ? 'dark' : 'light');
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
