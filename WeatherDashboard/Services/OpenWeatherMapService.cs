@@ -37,6 +37,7 @@ namespace WeatherDashboard.Services
                 TemperatureC = current.Main.Temp,
                 Humidity = current.Main.Humidity,
                 Condition = current.Weather?.FirstOrDefault()?.Main ?? current.Weather?.FirstOrDefault()?.Description ?? "N/A",
+                IconCode = current.Weather?.FirstOrDefault()?.Icon ?? "01d",
                 ForecastPoints = new List<WeatherPoint>()
             };
 
@@ -74,6 +75,11 @@ namespace WeatherDashboard.Services
             public MainInfo Main { get; set; } = new();
         }
         private class MainInfo { public double Temp { get; set; } public int Humidity { get; set; } }
-        private class WeatherInfo { public string Main { get; set; } = ""; public string Description { get; set; } = ""; }
+        private class WeatherInfo
+        {
+            public string Main { get; set; } = "";
+            public string Description { get; set; } = "";
+            public string Icon { get; set; } = "";  // <--- NEW
+        }
     }
 }

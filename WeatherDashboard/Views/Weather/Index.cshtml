@@ -19,41 +19,47 @@
 
         @if (Model != null)
         {
-            <div class="card" style="margin-top:1rem">
-                <h3>@Model.CityName</h3>
-                <p>Temperature: @Model.TemperatureC °C</p>
-                <p>Humidity: @Model.Humidity %</p>
-                <p>Condition: @Model.Condition</p>
+            <div class="card" style="margin-top:1rem; position:relative;">
+    <h3>@Model.CityName</h3>
+    <p>Temperature: @Model.TemperatureC °C</p>
+    <p>Humidity: @Model.Humidity %</p>
+    <p>Condition: @Model.Condition</p>
 
-                <canvas id="tempChart" width="600" height="250"></canvas>
+    <canvas id="tempChart" width="600" height="250"></canvas>
 
-                @section Scripts {
-                    <script>
-                        (function(){
-                            const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ForecastPoints.Select(p => p.DateTime.ToString("MM-dd HH:mm"))));
-                            const data = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ForecastPoints.Select(p => p.Temp)));
+    <!-- Weather icon bottom-left -->
+                <img src="@($"https://openweathermap.org/img/wn/{Model.IconCode}@2x.png")"
+                     alt="@Model.Condition"
+                     style="position:absolute; top:50px; right:100px; width:100px; height:100px; background-color:white;border:2px solid;"  />
 
-                            const ctx = document.getElementById('tempChart').getContext('2d');
-                            new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'Temperature (°C)',
-                                        data: data,
-                                        fill: false,
-                                        tension: 0.2
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    scales: { x: { display: true } }
-                                }
-                            });
-                        })();
-                    </script>
-                }
-            </div>
+    @section Scripts {
+        <script>
+            (function(){
+                const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ForecastPoints.Select(p => p.DateTime.ToString("MM-dd HH:mm"))));
+                const data = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ForecastPoints.Select(p => p.Temp)));
+
+                const ctx = document.getElementById('tempChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Temperature (°C)',
+                            data: data,
+                            fill: false,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: { x: { display: true } }
+                    }
+                });
+            })();
+        </script>
+    }
+</div>
+
         }
     </div>
 
@@ -72,7 +78,11 @@
                 {
                     <li>No searches yet</li>
                 }
+
             </ul>
+            
         </div>
+
     </aside>
+    
 </div>

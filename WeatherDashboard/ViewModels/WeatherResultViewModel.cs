@@ -9,6 +9,7 @@ namespace WeatherDashboard.ViewModels
         public double TemperatureC { get; set; }
         public int Humidity { get; set; }
         public string Condition { get; set; } = string.Empty;
+        public string IconCode { get; set; } = string.Empty;
         public List<WeatherPoint> ForecastPoints { get; set; } = new();
     }
 
